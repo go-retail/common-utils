@@ -3,9 +3,8 @@ package configutils
 import (
 	"fmt"
 
-	"github.com/spf13/viper"
-
 	"github.com/go-retail/common-utils/pkg/logutils"
+	"github.com/spf13/viper"
 )
 
 //GetConfig ..
