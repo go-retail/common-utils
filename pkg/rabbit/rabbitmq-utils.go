@@ -3,7 +3,7 @@ package rabbit
 import (
 	"fmt"
 
-	utils "github.com/go-retail/common-utils/pkg/log"
+	"github.com/go-retail/common-utils/pkg/logutils"
 	"github.com/spf13/viper"
 	"github.com/streadway/amqp"
 )
@@ -36,14 +36,14 @@ func InitRMQ() {
 	urlString := fmt.Sprintf(
 		"amqp://%s:%s@%s:5672", rmqConfigs.RabbitmqUsername, rmqConfigs.RabbitmqPassword, rmqConfigs.RabbitmqHost)
 	conn, err := amqp.Dial(urlString)
-	utils.FailOnError(err, "Failed to Connect to RabbitMQ")
+	logutils.FailOnError(err, "Failed to Connect to RabbitMQ")
 
 	ch, err := conn.Channel()
-	utils.FailOnError(err, "Failed to Open The Channel")
+	logutils.FailOnError(err, "Failed to Open The Channel")
 
 	//TODO Deliver to Exchange not a Queue
 	q, err := ch.QueueDeclare("hello", false, false, false, false, nil)
-	utils.FailOnError(err, "Unable to Declare a Queue")
+	logutils.FailOnError(err, "Unable to Declare a Queue")
 	Rmq = RMQ{conn, ch, &q}
 }
 
