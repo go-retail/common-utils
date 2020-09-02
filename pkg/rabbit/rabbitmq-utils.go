@@ -3,7 +3,7 @@ package rabbit
 import (
 	"fmt"
 
-	"github.com/go-retail/pos-server/pkg/utils"
+	utils "github.com/go-retail/common-utils/pkg/log"
 	"github.com/spf13/viper"
 	"github.com/streadway/amqp"
 )
@@ -18,7 +18,7 @@ type RMQ struct {
 	Queue      *amqp.Queue
 }
 
-//Configuration ..
+//RMQConfiguration ..
 type RMQConfiguration struct {
 	RabbitmqUsername string
 	RabbitmqPassword string
