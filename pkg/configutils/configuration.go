@@ -5,7 +5,7 @@ import (
 
 	"github.com/spf13/viper"
 
-	log "github.com/go-retail/common-utils/pkg/log"
+	log "github.com/go-retail/common-utils/pkg/logutils"
 )
 
 //GetConfig ..
