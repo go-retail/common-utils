@@ -5,7 +5,7 @@ import (
 
 	"github.com/spf13/viper"
 
-	log "github.com/go-retail/common-utils/pkg/logutils"
+	"github.com/go-retail/common-utils/pkg/logutils"
 )
 
 //GetConfig ..
@@ -17,7 +17,7 @@ func GetConfig() {
 	if err := viper.ReadInConfig(); err != nil {
 		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
 		} else {
-			log.FailOnError(err, "Error reading Config file")
+			logutils.FailOnError(err, "Error reading Config file")
 		}
 	}
 	fmt.Printf("Using config: %s\n", viper.ConfigFileUsed())
