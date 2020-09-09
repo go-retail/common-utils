@@ -51,3 +51,63 @@ func InitRMQ() {
 
 // defer rmq.Connection.Close()
 // defer rmq.Channel.Close()
+
+//PublishOnQueue ..
+func PublishOnQueue(msg []byte, queueName string) error {
+	if Rmq.Connection == nil {
+		panic("Tried to send message before connection was initialized. Don't do that.")
+	}
+
+	// Declare a queue that will be created if not exists with some args
+	queue, err := Rmq.Channel.QueueDeclare(
+		queueName, // our queue name
+		false,     // durable
+		false,     // delete when unused
+		false,     // exclusive
+		false,     // no-wait
+		nil,       // arguments
+	)
+
+	// Publishes a message onto the queue.
+	err = Rmq.Channel.Publish(
+		"",         // use the default exchange
+		queue.Name, // routing key, e.g. our queue name
+		false,      // mandatory
+		false,      // immediate
+		amqp.Publishing{
+			ContentType: "application/json",
+			Body:        msg, // Our JSON body as []byte
+		})
+	fmt.Printf("A message was sent to queue %v: %v", queueName, msg)
+	return err
+}
+
+//Publish ..
+func Publish(msg []byte, exchangeName string, queueName string) error {
+	if Rmq.Connection == nil {
+		panic("Tried to send message before connection was initialized. Don't do that.")
+	}
+
+	// Declare a queue that will be created if not exists with some args
+	queue, err := Rmq.Channel.QueueDeclare(
+		queueName, // our queue name
+		false,     // durable
+		false,     // delete when unused
+		false,     // exclusive
+		false,     // no-wait
+		nil,       // arguments
+	)
+
+	// Publishes a message onto the queue.
+	err = Rmq.Channel.Publish(
+		exchangeName, // use the exchange
+		queue.Name,   // routing key, e.g. our queue name
+		false,        // mandatory
+		false,        // immediate
+		amqp.Publishing{
+			ContentType: "application/json",
+			Body:        msg, // Our JSON body as []byte
+		})
+	fmt.Printf("A message was sent to queue %v: %v", queueName, msg)
+	return err
+}
